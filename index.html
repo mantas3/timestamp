@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<body align="center">
+<div style="display:flex">
+	<div style="flex: 1">
+		<p>Timestamp to time:</p>
+		<input id ="timestamp_input" type="number" ><br>
+		<p id="date_output"></p>
+	</div>
+	<div style="flex: 1">
+		<p>Time to timestamp:</p>
+		<input id ="date_input">
+		<br>
+		<p id="timestamp_ouput"></p>		
+	</div>
+</div>
+</body>
+<script>
+	const timestamp_input_element = document.getElementById("timestamp_input");
+	const date_output_element = document.getElementById("date_output");
+	const date_input_element = document.getElementById("date_input");
+	const timestamp_output_element = document.getElementById("timestamp_ouput");	
+	
+	timestamp_input_element.addEventListener("input", updateDateOutput);
+	date_input_element.addEventListener("input", updateTimestampOutput);
+
+	var currentTime = new Date;
+	timestamp_input_element.value = Math.round(currentTime / 1000);	
+	date_input_element.value = currentTime.toLocaleDateString("lt-LT")+" "+currentTime.toLocaleTimeString("lt-LT");
+
+
+	timestamp_input_element.dispatchEvent(new Event("input"));
+	date_input_element.dispatchEvent(new Event("input"));
+
+	function updateDateOutput(e) {
+		if(e.target.value != "") {
+			var timeStamp = new Date(e.target.value * 1000);
+  			date_output_element.innerHTML = timeStamp.toLocaleDateString("lt-LT")+" "+timeStamp.toLocaleTimeString("lt-LT");
+  		} else {
+  			date_output_element.innerHTML = "";
+  		}  		
+	}
+
+	function updateTimestampOutput(e) {
+		if(e.target.value != "") {
+			var dateTime = Date.parse(e.target.value);
+  			timestamp_output_element.innerHTML = dateTime / 1000;  			
+  		} else {
+  			timestamp_output_element.innerHTML = "";
+  		}  		
+	
+	}
+</script>
